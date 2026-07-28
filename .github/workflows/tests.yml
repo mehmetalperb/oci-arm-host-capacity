@@ -23,8 +23,10 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Write Private Key File
+        env:
+          KEY_DATA: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
         run: |
-          echo "${{ secrets.OCI_PRIVATE_KEY_FILENAME }}" > /tmp/oci_private_key.pem
+          printf "%s\n" "$KEY_DATA" > /tmp/oci_private_key.pem
           chmod 600 /tmp/oci_private_key.pem
 
       - name: Run OCI Capacity Script
